@@ -15,7 +15,7 @@ export interface OrderbookState {
 }
 
 const initialState: OrderbookState = {
-  market: 'PI_XBTUSD', // PI_ETHUSD
+  market: 'ETH/USD',
   rawBids: [],
   bids: [],
   maxTotalBids: 0,
@@ -151,7 +151,7 @@ export const orderbookSlice = createSlice({
       const bids: number[][] = addTotalSums(groupByTicketSize(rawBids, current(state).groupingSize));
       const asks: number[][] = addTotalSums(groupByTicketSize(rawAsks, current(state).groupingSize));
 
-      state.market = payload['product_id'];
+      state.market = payload['market'];
       state.rawBids = rawBids;
       state.rawAsks = rawAsks;
       state.maxTotalBids = getMaxTotalSum(bids);
@@ -161,6 +161,9 @@ export const orderbookSlice = createSlice({
     },
     setGrouping: (state, { payload }) => {
       state.groupingSize = payload;
+    },
+    setMarket: (state, { payload }) => {
+      state.market = payload
     },
     clearOrdersState: (state) => {
       state.bids = [];
@@ -173,7 +176,7 @@ export const orderbookSlice = createSlice({
   }
 });
 
-export const { addBids, addAsks, addExistingState, setGrouping, clearOrdersState } = orderbookSlice.actions;
+export const { addBids, addAsks, addExistingState, setGrouping, setMarket, clearOrdersState } = orderbookSlice.actions;
 
 export const selectBids = (state: RootState): number[][] => state.orderbook.bids;
 export const selectAsks = (state: RootState): number[][] => state.orderbook.asks;

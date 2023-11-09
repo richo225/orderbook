@@ -4,8 +4,8 @@ import Header from "./components/Header";
 import OrderBook from "./components/OrderBook";
 import Footer from "./components/Footer";
 import StatusMessage from "./components/StatusMessage";
-import { clearOrdersState } from "./components/OrderBook/orderbookSlice";
-import { useAppDispatch } from "./hooks";
+import { clearOrdersState, selectMarket } from "./components/OrderBook/orderbookSlice";
+import { useAppDispatch, useAppSelector } from "./hooks";
 
 export const MarketPairs = {
   ETHUSD: 'ETH/USD',
@@ -18,10 +18,9 @@ const options: any = Object.values(MarketPairs)
 
 function App() {
   const [windowWidth, setWindowWidth] = useState(0);
-  const [market, setMarket] = useState(MarketPairs.ETHUSD);
   const [isFeedKilled, setIsFeedKilled] = useState(false);
   const [isPageVisible, setIsPageVisible] = useState(true);
-  const dispatch = useAppDispatch();
+  const market: string = useAppSelector(selectMarket);
 
   // Window width detection
   useEffect(() => {

@@ -35,9 +35,13 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
   const [quote, setQuote] = useState("USD");
 
   const fetchOrderbook = () => {
-    setBase(market.split("/")[0]);
-    setQuote(market.split("/")[1]);
+    const base = market.split("/")[0];
+    const quote = market.split("/")[1];
     
+    console.log("Fetching orderbook");
+    console.log("Base", base);
+    console.log("Quote", quote);
+
     axios
       .get(`http://localhost:8080/orderbooks?base=${base}&quote=${quote}`)
       .then((response) => {
@@ -54,7 +58,7 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
       fetchOrderbook()
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [market]);
 
   const processData = (response: any) => {
     const data: { asks: number[][]; bids: number[][] } = {
