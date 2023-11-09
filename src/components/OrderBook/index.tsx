@@ -11,8 +11,6 @@ import { PriceLevelRowContainer } from "./PriceLevelRow/styles";
 import { formatNumber } from "../../helpers";
 import axios from "axios";
 
-const WSS_FEED_URL: string = "wss://www.cryptofacilities.com/ws/v1";
-
 export enum OrderType {
   BIDS,
   ASKS,
@@ -31,17 +29,11 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
 }) => {
   const [asks, setAsks] = useState<number[][]>([]);
   const [bids, setBids] = useState<number[][]>([]);
-  const [base, setBase] = useState("ETH");
-  const [quote, setQuote] = useState("USD");
 
   const fetchOrderbook = () => {
     const base = market.split("/")[0];
     const quote = market.split("/")[1];
     
-    console.log("Fetching orderbook");
-    console.log("Base", base);
-    console.log("Quote", quote);
-
     axios
       .get(`http://localhost:8080/orderbooks?base=${base}&quote=${quote}`)
       .then((response) => {
