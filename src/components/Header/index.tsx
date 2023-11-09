@@ -1,17 +1,17 @@
 import React, { FunctionComponent } from 'react';
 
 import { Container } from "./styles";
-import GroupingSelectBox from "../GroupingSelectBox";
+import MarketSelectBox from "../MarketSelectBox";
 
 interface HeaderProps {
-  options: number[];
+  options: string[];
 }
 
 const Header: FunctionComponent<HeaderProps> = ({options}) => {
   return (
     <Container>
       <h3>Order Book</h3>
-      <GroupingSelectBox options={options} />
+      <MarketSelectBox options={options} />
     </Container>
   );
 };
