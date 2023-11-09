@@ -20,13 +20,13 @@ export enum OrderType {
 
 interface OrderBookProps {
   windowWidth: number;
-  productId: string;
+  market: string;
   isFeedKilled: boolean;
 }
 
 const OrderBook: FunctionComponent<OrderBookProps> = ({
   windowWidth,
-  productId,
+  market,
   isFeedKilled,
 }) => {
   const [asks, setAsks] = useState<number[][]>([]);
@@ -35,6 +35,9 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
   const [quote, setQuote] = useState("USD");
 
   const fetchOrderbook = () => {
+    setBase(market.split("/")[0]);
+    setQuote(market.split("/")[1]);
+    
     axios
       .get(`http://localhost:8080/orderbooks?base=${base}&quote=${quote}`)
       .then((response) => {

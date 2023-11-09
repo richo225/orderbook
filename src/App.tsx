@@ -7,24 +7,18 @@ import StatusMessage from "./components/StatusMessage";
 import { clearOrdersState } from "./components/OrderBook/orderbookSlice";
 import { useAppDispatch } from "./hooks";
 
-export const ProductIds = {
-  XBTUSD: 'PI_XBTUSD',
-  ETHUSD: 'PI_ETHUSD'
+export const MarketPairs = {
+  ETHUSD: 'ETH/USD',
+  ETHGBP: 'ETH/GBP',
+  BTCUSD: 'BTC/USD',
+  BTCGBP: 'BTC/GBP',
 };
 
-const options: any = {
-  PI_XBTUSD: [0.5, 1, 2.5],
-  PI_ETHUSD: [0.05, 0.1, 0.25]
-};
-
-export const ProductsMap: any = {
-  "PI_XBTUSD": "PI_ETHUSD",
-  "PI_ETHUSD": "PI_XBTUSD",
-}
+const options: any = Object.values(MarketPairs)
 
 function App() {
   const [windowWidth, setWindowWidth] = useState(0);
-  const [productId, setProductId] = useState(ProductIds.XBTUSD);
+  const [market, setMarket] = useState(MarketPairs.ETHUSD);
   const [isFeedKilled, setIsFeedKilled] = useState(false);
   const [isPageVisible, setIsPageVisible] = useState(true);
   const dispatch = useAppDispatch();
@@ -78,11 +72,6 @@ function App() {
     }
   }, []);
 
-  const toggleProductId = (): void => {
-    dispatch(clearOrdersState());
-    setProductId(ProductsMap[productId]);
-  };
-
   const toggleFeed = (): void => {
     setIsFeedKilled(!isFeedKilled);
   }
@@ -91,10 +80,10 @@ function App() {
     <>
       {isPageVisible ? <>
         <GlobalStyle />
-        <Header options={options[productId]} />
-        <OrderBook windowWidth={windowWidth} productId={productId} isFeedKilled={isFeedKilled} />
-        <Footer toggleFeedCallback={toggleProductId} killFeedCallback={toggleFeed} isFeedKilled={isFeedKilled} />
-        <StatusMessage isFeedKilled={isFeedKilled} selectedMarket={productId} />
+        <Header options={options} />
+        <OrderBook windowWidth={windowWidth} market={market} isFeedKilled={isFeedKilled} />
+        <Footer toggleFeedCallback={clearOrdersState} killFeedCallback={toggleFeed} isFeedKilled={isFeedKilled} />
+        <StatusMessage isFeedKilled={isFeedKilled} selectedMarket={market} />
       </> : 'HIDDEN PAGE.'}
     </>
   );
