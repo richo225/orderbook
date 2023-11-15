@@ -12,6 +12,8 @@ export interface OrderbookState {
   asks: number[][];
   maxTotalAsks: number;
   groupingSize: number;
+  bestBid: number[];
+  bestAsk: number[];
 }
 
 const initialState: OrderbookState = {
@@ -22,7 +24,9 @@ const initialState: OrderbookState = {
   rawAsks: [],
   asks: [],
   maxTotalAsks: 0,
-  groupingSize: 0.5
+  groupingSize: 0.5,
+  bestBid: [],
+  bestAsk: []
 };
 
 const removePriceLevel = (price: number, levels: number[][]): number[][] => levels.filter(level => level[0] !== price);
@@ -165,6 +169,12 @@ export const orderbookSlice = createSlice({
     setMarket: (state, { payload }) => {
       state.market = payload
     },
+    setBestBid: (state, { payload }) => {
+      state.bestBid = payload;
+    },
+    setBestAsk: (state, { payload }) => {
+      state.bestAsk = payload;
+    },
     clearOrdersState: (state) => {
       state.bids = [];
       state.asks = [];
@@ -176,11 +186,14 @@ export const orderbookSlice = createSlice({
   }
 });
 
-export const { addBids, addAsks, addExistingState, setGrouping, setMarket, clearOrdersState } = orderbookSlice.actions;
+export const { addBids, addAsks, addExistingState, setGrouping, setMarket, setBestAsk, setBestBid, clearOrdersState } = orderbookSlice.actions;
 
 export const selectBids = (state: RootState): number[][] => state.orderbook.bids;
 export const selectAsks = (state: RootState): number[][] => state.orderbook.asks;
 export const selectGrouping = (state: RootState): number => state.orderbook.groupingSize;
 export const selectMarket = (state: RootState): string => state.orderbook.market;
+export const selectBestBid = (state: RootState): number[] => state.orderbook.bestBid;
+export const selectBestAsk = (state: RootState): number[] => state.orderbook.bestAsk;
+
 
 export default orderbookSlice.reducer;

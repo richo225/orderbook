@@ -1,7 +1,9 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 
 import { Container, Form } from "./styles";
 import axios from "axios";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { selectBestAsk, selectBestBid } from "../OrderBook/orderbookSlice";
 
 export enum OrderType {
   BIDS,
@@ -13,10 +15,40 @@ interface OrderFormProps {
 }
 
 const OrderForm: FunctionComponent<OrderFormProps> = ({market}) => {
-  const [price, setPrice] = useState(Number(0.000));
-  const [size, setSize] = useState(Number(0.000));
+  const bestAsk: number[] = useAppSelector(selectBestAsk);
+  const bestBid: number[] = useAppSelector(selectBestBid);
+
+  const [price, setPrice] = useState<number | undefined>(undefined);
+  const [size, setSize] = useState<number | undefined>(undefined);
   const [orderType, setOrderType] = useState('limit');
   const [orderSide, setOrderSide] = useState('ask');
+
+  useEffect(() => {
+    setPrice(undefined);
+    setSize(undefined);
+  }, [market]);
+
+  useEffect(() => {
+    if (bestAsk.length > 0 && price === undefined) {
+      setPrice(bestAsk[0]);
+    }
+    if (bestAsk.length > 0 && size === undefined) {
+      setSize(bestAsk[1]);
+    }
+  }, [bestAsk, price, size]);
+
+  const handleSideChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setOrderSide(e.target.value);
+    
+    if (e.target.value === 'bid' && bestBid.length > 0) {
+      setPrice(bestBid[0]);
+      setSize(bestBid[1]);
+    } else if (e.target.value === 'ask' && bestAsk.length > 0) {
+      setPrice(bestAsk[0]);
+      setSize(bestAsk[1]);
+    }
+  };
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,7 +68,7 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({market}) => {
         <form onSubmit={handleSubmit}>
           <label>
             Side:
-            <select value={orderSide} onChange={e => setOrderSide(e.target.value)}>
+            <select value={orderSide} onChange={handleSideChange}>
               <option value="bid">BID</option>
               <option value="ask">ASK</option>
             </select>

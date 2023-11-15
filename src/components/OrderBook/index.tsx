@@ -10,6 +10,8 @@ import DepthVisualizer from "../DepthVisualizer";
 import { PriceLevelRowContainer } from "./PriceLevelRow/styles";
 import { formatNumber } from "../../helpers";
 import axios from "axios";
+import { useAppDispatch } from "../../hooks";
+import { setBestBid, setBestAsk } from "../OrderBook/orderbookSlice";
 
 export enum OrderType {
   BIDS,
@@ -29,13 +31,14 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
 }) => {
   const [asks, setAsks] = useState<number[][]>([]);
   const [bids, setBids] = useState<number[][]>([]);
+  const dispatch = useAppDispatch();
 
   const fetchOrderbook = () => {
     if (isFeedKilled) return;
 
     const base = market.split("/")[0];
     const quote = market.split("/")[1];
-    
+
     axios
       .get(`http://localhost:8080/orderbooks?base=${base}&quote=${quote}`)
       .then((response) => {
@@ -49,7 +52,7 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
   useEffect(() => {
     fetchOrderbook();
     const interval = setInterval(() => {
-      fetchOrderbook()
+      fetchOrderbook();
     }, 5000);
     return () => clearInterval(interval);
   }, [market, isFeedKilled]);
@@ -92,6 +95,9 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
 
     setAsks(data.asks);
     setBids(data.bids);
+
+    dispatch(setBestAsk(data.asks[data.asks.length - 1]));
+    dispatch(setBestBid(data.bids[0]));
   };
 
   const formatPrice = (arg: number): string => {
