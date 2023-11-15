@@ -31,6 +31,8 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
   const [bids, setBids] = useState<number[][]>([]);
 
   const fetchOrderbook = () => {
+    if (isFeedKilled) return;
+
     const base = market.split("/")[0];
     const quote = market.split("/")[1];
     
@@ -50,7 +52,7 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
       fetchOrderbook()
     }, 5000);
     return () => clearInterval(interval);
-  }, [market]);
+  }, [market, isFeedKilled]);
 
   const processData = (response: any) => {
     const data: { asks: number[][]; bids: number[][] } = {
