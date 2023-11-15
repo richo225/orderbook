@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import OrderBook from "./components/OrderBook";
 import Footer from "./components/Footer";
 import StatusMessage from "./components/StatusMessage";
+import OrderForm from './components/OrderForm/orderForm';
 import { clearOrdersState, selectMarket } from "./components/OrderBook/orderbookSlice";
 import { useAppDispatch, useAppSelector } from "./hooks";
 
@@ -83,6 +84,7 @@ function App() {
         <OrderBook windowWidth={windowWidth} market={market} isFeedKilled={isFeedKilled} />
         <Footer toggleFeedCallback={clearOrdersState} killFeedCallback={toggleFeed} isFeedKilled={isFeedKilled} />
         <StatusMessage isFeedKilled={isFeedKilled} selectedMarket={market} />
+        <OrderForm market={market} />
       </> : 'HIDDEN PAGE.'}
     </>
   );
