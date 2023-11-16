@@ -99,7 +99,7 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
     setBids(data.bids);
 
     dispatch(setBestAsk(data.asks[data.asks.length - 1]));
-    dispatch(setBestBid(data.bids[data.asks.length - 1]));
+    dispatch(setBestBid(data.bids[data.bids.length - 1]));
   };
 
   
