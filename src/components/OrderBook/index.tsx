@@ -8,7 +8,7 @@ import { MOBILE_WIDTH, ORDERBOOK_LEVELS } from "../../constants";
 import Loader from "../Loader";
 import DepthVisualizer from "../DepthVisualizer";
 import { PriceLevelRowContainer } from "./PriceLevelRow/styles";
-import { formatNumber } from "../../helpers";
+import { formatNumber, formatPrice } from "../../helpers";
 import axios from "axios";
 import { useAppDispatch } from "../../hooks";
 import { setBestBid, setBestAsk } from "../OrderBook/orderbookSlice";
@@ -102,12 +102,7 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
     dispatch(setBestBid(data.bids[data.asks.length - 1]));
   };
 
-  const formatPrice = (arg: number): string => {
-    return arg.toLocaleString("en", {
-      useGrouping: true,
-      minimumFractionDigits: 2,
-    });
-  };
+  
 
   const buildPriceLevels = (
     levels: number[][],

@@ -7,6 +7,7 @@ import StatusMessage from "./components/StatusMessage";
 import OrderForm from './components/OrderForm/orderForm';
 import { clearOrdersState, selectMarket } from "./components/OrderBook/orderbookSlice";
 import { useAppDispatch, useAppSelector } from "./hooks";
+import OrderMessage from './components/OrderMessage';
 
 export const MarketPairs = {
   ETHUSD: 'ETH/USD',
@@ -90,6 +91,7 @@ function App() {
         <Footer toggleFeedCallback={clearOrdersState} killFeedCallback={toggleFeed} isFeedKilled={isFeedKilled} />
         <StatusMessage isFeedKilled={isFeedKilled} selectedMarket={market} />
         <OrderForm market={market} fetchOrdersCallback={fetchOrdersCallback} />
+        <OrderMessage isCreated={fetchOrders} />
       </> : 'HIDDEN PAGE.'}
     </>
   );
