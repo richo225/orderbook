@@ -4,11 +4,10 @@ export const Container = styled.div`
   color: white;
   font-size: 1.2em;
   width: 100%;
-  margin: 2.5em 0;
   text-align: center;
   display: flex;
   justify-content: center;
-`
+`;
 
 export const Form = styled.div`
   form {
@@ -19,7 +18,8 @@ export const Form = styled.div`
     margin: 0.2em 0;
   }
 
-  select, input {
+  select,
+  input {
     border-radius: 3px;
     padding: 0.3em;
     color: white;
@@ -31,7 +31,7 @@ export const Form = styled.div`
   }
 
   button {
-    padding: .3em .7em;
+    padding: 0.3em 0.7em;
     margin: 1em;
     border-radius: 4px;
     border: none;
@@ -39,10 +39,10 @@ export const Form = styled.div`
     background: #118860;
     font-family: "Calibri", sans-serif;
     font-size: 1.2em;
-    
+
     &:hover {
       cursor: pointer;
-      opacity: .8;
+      opacity: 0.8;
     }
   }
-`
+`;

@@ -6,4 +6,10 @@ export const Container = styled.div`
   width: 100%;
   text-align: center;
   margin-bottom: 1em;
-`
+
+  pre {
+    font-size: 0.8em;
+    text-align: left;
+    padding: 10px;
+  }
+`;

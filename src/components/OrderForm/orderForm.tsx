@@ -13,62 +13,80 @@ export enum OrderType {
 interface OrderFormProps {
   market: string;
   fetchOrdersCallback: () => void;
+  setCreatedDataCallback: (data: object) => void;
+  setErrorDataCallback: (data: object) => void;
 }
 
-const OrderForm: FunctionComponent<OrderFormProps> = ({market, fetchOrdersCallback}) => {
+const OrderForm: FunctionComponent<OrderFormProps> = ({
+  market,
+  fetchOrdersCallback,
+  setCreatedDataCallback,
+  setErrorDataCallback,
+}) => {
   const bestAsk: number[] = useAppSelector(selectBestAsk);
   const bestBid: number[] = useAppSelector(selectBestBid);
 
   const [price, setPrice] = useState<number | undefined>(undefined);
   const [size, setSize] = useState<number | undefined>(undefined);
-  const [orderType, setOrderType] = useState('limit');
-  const [orderSide, setOrderSide] = useState('ask');
+  const [orderType, setOrderType] = useState("limit");
+  const [orderSide, setOrderSide] = useState("ask");
 
   useEffect(() => {
     if (price === undefined && size === undefined) {
-      if (orderSide === 'ask' && bestAsk.length > 0) {
+      if (orderSide === "ask" && bestAsk.length > 0) {
         setPrice(bestAsk[0]);
         setSize(bestAsk[1]);
-      } else if (orderSide === 'bid' && bestBid.length > 0) {
+      } else if (orderSide === "bid" && bestBid.length > 0) {
         setPrice(bestBid[0]);
         setSize(bestBid[1]);
       }
     }
   }, [market, bestAsk, bestBid]);
-  
+
   useEffect(() => {
     setPrice(undefined);
     setSize(undefined);
-    setOrderSide('ask');
+    setOrderSide("ask");
   }, [market]);
 
   const handleSideChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCreatedDataCallback({});
+    setErrorDataCallback({});
     setOrderSide(e.target.value);
-    
-    if (e.target.value === 'bid' && bestBid.length > 0) {
+
+    if (e.target.value === "bid" && bestBid.length > 0) {
       setPrice(bestBid[0]);
       setSize(bestBid[1]);
-    } else if (e.target.value === 'ask' && bestAsk.length > 0) {
+    } else if (e.target.value === "ask" && bestAsk.length > 0) {
       setPrice(bestAsk[0]);
       setSize(bestAsk[1]);
     }
   };
 
+  const handleOrderTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCreatedDataCallback({});
+    setErrorDataCallback({});
+    setOrderType(e.target.value);
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/orders', {
-      base: market.split('/')[0],
-      quote: market.split('/')[1],
-      price: price,
-      size: size,
-      type: orderType,
-      side: orderSide
-    }).then(() => {
-      fetchOrdersCallback();
-    }).catch((error) => {
-      console.log(error);
-    });
+    axios
+      .post("http://localhost:8080/orders", {
+        base: market.split("/")[0],
+        quote: market.split("/")[1],
+        price: price,
+        size: size,
+        type: orderType,
+        side: orderSide,
+      })
+      .then((response) => {
+        setCreatedDataCallback(response.data);
+        fetchOrdersCallback();
+      })
+      .catch((error) => {
+        setErrorDataCallback(error.response.data);
+      });
   };
 
   return (
@@ -84,20 +102,30 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({market, fetchOrdersCallba
           </label>
           <label>
             Type:
-            <select value={orderType} onChange={e => setOrderType(e.target.value)}>
+            <select value={orderType} onChange={handleOrderTypeChange}>
               <option value="limit">LIMIT</option>
               <option value="market">MARKET</option>
             </select>
           </label>
-          {orderType !== 'market' && (
+          {orderType !== "market" && (
             <label>
               Price:
-              <input type="number" step="0.001" value={price} onChange={e => setPrice(Number(e.target.value))} />
+              <input
+                type="number"
+                step="0.001"
+                value={price}
+                onChange={(e) => setPrice(Number(e.target.value))}
+              />
             </label>
           )}
           <label>
             Size:
-            <input type="number" step="0.001" value={size} onChange={e => setSize(Number(e.target.value))} />
+            <input
+              type="number"
+              step="0.001"
+              value={size}
+              onChange={(e) => setSize(Number(e.target.value))}
+            />
           </label>
           <button type="submit">Submit Order</button>
         </form>
