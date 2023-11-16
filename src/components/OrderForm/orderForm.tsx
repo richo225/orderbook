@@ -89,10 +89,12 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({market, fetchOrdersCallba
               <option value="market">MARKET</option>
             </select>
           </label>
-          <label>
-            Price:
-            <input type="number" step="0.001" value={price} onChange={e => setPrice(Number(e.target.value))} />
-          </label>
+          {orderType !== 'market' && (
+            <label>
+              Price:
+              <input type="number" step="0.001" value={price} onChange={e => setPrice(Number(e.target.value))} />
+            </label>
+          )}
           <label>
             Size:
             <input type="number" step="0.001" value={size} onChange={e => setSize(Number(e.target.value))} />
