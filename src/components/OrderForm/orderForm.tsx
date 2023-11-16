@@ -12,9 +12,10 @@ export enum OrderType {
 
 interface OrderFormProps {
   market: string;
+  fetchOrdersCallback: () => void;
 }
 
-const OrderForm: FunctionComponent<OrderFormProps> = ({market}) => {
+const OrderForm: FunctionComponent<OrderFormProps> = ({market, fetchOrdersCallback}) => {
   const bestAsk: number[] = useAppSelector(selectBestAsk);
   const bestBid: number[] = useAppSelector(selectBestBid);
 
@@ -59,6 +60,10 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({market}) => {
       size: size,
       type: orderType,
       side: orderSide
+    }).then(() => {
+      fetchOrdersCallback();
+    }).catch((error) => {
+      console.log(error);
     });
   };
 

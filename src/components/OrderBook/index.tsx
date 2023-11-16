@@ -22,12 +22,14 @@ interface OrderBookProps {
   windowWidth: number;
   market: string;
   isFeedKilled: boolean;
+  fetchOrders: boolean;
 }
 
 const OrderBook: FunctionComponent<OrderBookProps> = ({
   windowWidth,
   market,
   isFeedKilled,
+  fetchOrders,
 }) => {
   const [asks, setAsks] = useState<number[][]>([]);
   const [bids, setBids] = useState<number[][]>([]);
@@ -55,7 +57,7 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
       fetchOrderbook();
     }, 5000);
     return () => clearInterval(interval);
-  }, [market, isFeedKilled]);
+  }, [market, isFeedKilled, fetchOrders]);
 
   const processData = (response: any) => {
     const data: { asks: number[][]; bids: number[][] } = {

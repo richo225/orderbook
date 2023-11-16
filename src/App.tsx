@@ -20,6 +20,7 @@ const options: any = Object.values(MarketPairs)
 function App() {
   const [windowWidth, setWindowWidth] = useState(0);
   const [isFeedKilled, setIsFeedKilled] = useState(false);
+  const [fetchOrders, setFetchOrders] = useState(false);
   const [isPageVisible, setIsPageVisible] = useState(true);
   const market: string = useAppSelector(selectMarket);
 
@@ -76,15 +77,19 @@ function App() {
     setIsFeedKilled(!isFeedKilled);
   }
 
+  const fetchOrdersCallback = (): void => {
+    setFetchOrders(!fetchOrders)
+  }
+
   return (
     <>
       {isPageVisible ? <>
         <GlobalStyle />
         <Header options={options} />
-        <OrderBook windowWidth={windowWidth} market={market} isFeedKilled={isFeedKilled} />
+        <OrderBook windowWidth={windowWidth} market={market} isFeedKilled={isFeedKilled} fetchOrders={fetchOrders} />
         <Footer toggleFeedCallback={clearOrdersState} killFeedCallback={toggleFeed} isFeedKilled={isFeedKilled} />
         <StatusMessage isFeedKilled={isFeedKilled} selectedMarket={market} />
-        <OrderForm market={market} />
+        <OrderForm market={market} fetchOrdersCallback={fetchOrdersCallback} />
       </> : 'HIDDEN PAGE.'}
     </>
   );
