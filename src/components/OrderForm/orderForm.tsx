@@ -25,18 +25,22 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({market, fetchOrdersCallba
   const [orderSide, setOrderSide] = useState('ask');
 
   useEffect(() => {
+    if (price === undefined && size === undefined) {
+      if (orderSide === 'ask' && bestAsk.length > 0) {
+        setPrice(bestAsk[0]);
+        setSize(bestAsk[1]);
+      } else if (orderSide === 'bid' && bestBid.length > 0) {
+        setPrice(bestBid[0]);
+        setSize(bestBid[1]);
+      }
+    }
+  }, [market, bestAsk, bestBid]);
+  
+  useEffect(() => {
     setPrice(undefined);
     setSize(undefined);
+    setOrderSide('ask');
   }, [market]);
-
-  useEffect(() => {
-    if (bestAsk.length > 0 && price === undefined) {
-      setPrice(bestAsk[0]);
-    }
-    if (bestAsk.length > 0 && size === undefined) {
-      setSize(bestAsk[1]);
-    }
-  }, [bestAsk, price, size]);
 
   const handleSideChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setOrderSide(e.target.value);

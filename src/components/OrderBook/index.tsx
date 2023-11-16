@@ -99,7 +99,7 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
     setBids(data.bids);
 
     dispatch(setBestAsk(data.asks[data.asks.length - 1]));
-    dispatch(setBestBid(data.bids[0]));
+    dispatch(setBestBid(data.bids[data.asks.length - 1]));
   };
 
   const formatPrice = (arg: number): string => {
@@ -113,7 +113,6 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
     levels: number[][],
     orderType: OrderType = OrderType.BIDS
   ): React.ReactNode => {
-    console.log("Levels", levels);
     const sortedLevelsByPrice: number[][] = [...levels].sort(
       (currentLevel: number[], nextLevel: number[]): number => {
         let result: number = 0;
