@@ -33,16 +33,27 @@ const GridContainer = styled.div`
 
   .footer {
     grid-area: footer;
-    border-right: 1px solid #29303e;
+    position: relative;
   }
 
   .orderform {
     grid-area: orderform;
-    border-right: 1px solid #29303e;
+    position: relative;
   }
 
   .ordermessage {
     grid-area: ordermessage;
+    position: relative;
+  }
+
+  .ordermessage::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    right: 0;
+    left: 0;
+    border-left: 1px solid #29303e;
     border-right: 1px solid #29303e;
   }
 
@@ -52,14 +63,35 @@ const GridContainer = styled.div`
       "orderform footer"
       "ordermessage ordermessage";
 
-    .orderform {
-      border-right: 1px solid #29303e;
-    }
+      .orderform::before {
+        content: "";
+        position: absolute;
+        top: 10%;
+        bottom: 10%;
+        right: 0;
+        border-right: 1px solid #29303e;
+      }
+      
+      .orderform::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 10%;
+        right: 10%;
+        border-bottom: 1px solid #29303e;
+      }
 
-    .ordermessage {
-      border: none;
-      padding-top: 2em;
-      border-top: 1px solid #29303e;
+      .footer::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 5%;
+        right: 10%; /* Adjust this to change the ending point of the border */
+        border-bottom: 1px solid #29303e;
+      }
+
+    ordermessage {
+      border: none !important;
     }
   }
 
@@ -71,11 +103,11 @@ const GridContainer = styled.div`
       "ordermessage";
 
     .orderform {
-      border: none;
+      border: none !important;
       border-bottom: 1px solid #29303e;
     }
     .footer {
-      border: none;
+      border: none !important;
       border-bottom: 1px solid #29303e;
       padding-bottom: 2em;
     }
