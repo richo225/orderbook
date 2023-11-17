@@ -4,12 +4,14 @@ export const Container = styled.div`
   color: white;
   font-size: 1.2em;
   width: 100%;
-  text-align: center;
   margin-bottom: 1em;
+  text-align: center;
+  padding: 0.5em;
 
   pre {
-    font-size: 0.8em;
+    font-size: 0.9em;
     text-align: left;
-    padding: 10px;
+    padding: 1em;
+    display: inline-block;
   }
 `;

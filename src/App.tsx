@@ -120,10 +120,22 @@ function App() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr",
+              gridTemplateColumns: "1fr 1.5fr 1fr",
               gap: "20px",
+              padding: "5px"
             }}
           >
+            <div>
+              <OrderForm
+                market={market}
+                fetchOrdersCallback={fetchOrdersCallback}
+                setCreatedDataCallback={setCreatedDataCallback}
+                setErrorDataCallback={setErrorDataCallback}
+              />
+            </div>
+            <div style={{ borderLeft: "1px solid #29303e", borderRight: "1px solid #29303e" }}>
+              <OrderMessage errorData={errorData} createdData={createdData} />
+            </div>
             <div>
               <Footer
                 toggleFeedCallback={clearOrdersState}
@@ -134,17 +146,6 @@ function App() {
                 isFeedKilled={isFeedKilled}
                 selectedMarket={market}
               />
-            </div>
-            <div>
-              <OrderForm
-                market={market}
-                fetchOrdersCallback={fetchOrdersCallback}
-                setCreatedDataCallback={setCreatedDataCallback}
-                setErrorDataCallback={setErrorDataCallback}
-              />
-            </div>
-            <div>
-              <OrderMessage errorData={errorData} createdData={createdData} />
             </div>
           </div>
         </>

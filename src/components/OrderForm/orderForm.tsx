@@ -44,6 +44,8 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({
   }, [market, bestAsk, bestBid]);
 
   useEffect(() => {
+    setCreatedDataCallback({});
+    setErrorDataCallback({});
     setPrice(undefined);
     setSize(undefined);
     setOrderSide("ask");
