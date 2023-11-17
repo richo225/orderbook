@@ -9,6 +9,7 @@ export const Container = styled.div`
   padding: 0.5em;
 
   pre {
+    color: #98a6af;
     font-size: 0.9em;
     text-align: left;
     padding: 1em;
