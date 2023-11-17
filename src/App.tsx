@@ -5,6 +5,8 @@ import OrderBook from "./components/OrderBook";
 import Footer from "./components/Footer";
 import StatusMessage from "./components/StatusMessage";
 import OrderForm from "./components/OrderForm/orderForm";
+import styled from "styled-components";
+import { MOBILE_WIDTH } from "./constants";
 import {
   clearOrdersState,
   selectMarket,
@@ -21,6 +23,67 @@ export const MarketPairs = {
 };
 
 const options: any = Object.values(MarketPairs);
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  grid-template-areas: "orderform ordermessage footer";
+  gap: 20px;
+  padding: 5px;
+
+  .footer {
+    grid-area: footer;
+    border-right: 1px solid #29303e;
+  }
+
+  .orderform {
+    grid-area: orderform;
+    border-right: 1px solid #29303e;
+  }
+
+  .ordermessage {
+    grid-area: ordermessage;
+    border-right: 1px solid #29303e;
+  }
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "orderform footer"
+      "ordermessage ordermessage";
+
+    .orderform {
+      border-right: 1px solid #29303e;
+    }
+
+    .ordermessage {
+      border: none;
+      padding-top: 2em;
+      border-top: 1px solid #29303e;
+    }
+  }
+
+  @media (max-width: ${MOBILE_WIDTH}px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "footer"
+      "orderform"
+      "ordermessage";
+
+    .orderform {
+      border: none;
+      border-bottom: 1px solid #29303e;
+    }
+    .footer {
+      border: none;
+      border-bottom: 1px solid #29303e;
+      padding-bottom: 2em;
+    }
+    .ordermessage {
+      border: none !important;
+    }
+  }
+`;
 
 function App() {
   const [windowWidth, setWindowWidth] = useState(0);
@@ -117,15 +180,8 @@ function App() {
             isFeedKilled={isFeedKilled}
             fetchOrders={fetchOrders}
           />
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1.5fr 1fr",
-              gap: "20px",
-              padding: "5px"
-            }}
-          >
-            <div>
+          <GridContainer>
+            <div className="orderform">
               <OrderForm
                 market={market}
                 fetchOrdersCallback={fetchOrdersCallback}
@@ -133,10 +189,10 @@ function App() {
                 setErrorDataCallback={setErrorDataCallback}
               />
             </div>
-            <div style={{ borderLeft: "1px solid #29303e", borderRight: "1px solid #29303e" }}>
+            <div className="ordermessage">
               <OrderMessage errorData={errorData} createdData={createdData} />
             </div>
-            <div>
+            <div className="footer">
               <Footer
                 toggleFeedCallback={clearOrdersState}
                 killFeedCallback={toggleFeed}
@@ -147,7 +203,7 @@ function App() {
                 selectedMarket={market}
               />
             </div>
-          </div>
+          </GridContainer>
         </>
       ) : (
         "HIDDEN PAGE."

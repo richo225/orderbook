@@ -95,40 +95,48 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({
     <Container>
       <Form>
         <form onSubmit={handleSubmit}>
-          <label>
-            Side:
-            <select value={orderSide} onChange={handleSideChange}>
-              <option value="bid">BID</option>
-              <option value="ask">ASK</option>
-            </select>
-          </label>
-          <label>
-            Type:
-            <select value={orderType} onChange={handleOrderTypeChange}>
-              <option value="limit">LIMIT</option>
-              <option value="market">MARKET</option>
-            </select>
-          </label>
-          {orderType !== "market" && (
+          <div className="form-group">
             <label>
-              Price:
+              Side:
+              <select value={orderSide} onChange={handleSideChange}>
+                <option value="bid">BID</option>
+                <option value="ask">ASK</option>
+              </select>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Type:
+              <select value={orderType} onChange={handleOrderTypeChange}>
+                <option value="limit">LIMIT</option>
+                <option value="market">MARKET</option>
+              </select>
+            </label>
+          </div>
+          {orderType !== "market" && (
+            <div className="form-group">
+              <label>
+                Price:
+                <input
+                  type="number"
+                  step="0.001"
+                  value={price}
+                  onChange={(e) => setPrice(Number(e.target.value))}
+                />
+              </label>
+            </div>
+          )}
+          <div className="form-group">
+            <label>
+              Size:
               <input
                 type="number"
                 step="0.001"
-                value={price}
-                onChange={(e) => setPrice(Number(e.target.value))}
+                value={size}
+                onChange={(e) => setSize(Number(e.target.value))}
               />
             </label>
-          )}
-          <label>
-            Size:
-            <input
-              type="number"
-              step="0.001"
-              value={size}
-              onChange={(e) => setSize(Number(e.target.value))}
-            />
-          </label>
+          </div>
           <button type="submit">Submit Order</button>
         </form>
       </Form>
