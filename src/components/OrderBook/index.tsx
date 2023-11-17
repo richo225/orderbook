@@ -102,8 +102,6 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
     dispatch(setBestBid(data.bids[data.bids.length - 1]));
   };
 
-  
-
   const buildPriceLevels = (
     levels: number[][],
     orderType: OrderType = OrderType.BIDS

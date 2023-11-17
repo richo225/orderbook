@@ -5,4 +5,4 @@ export const Container = styled.div`
   font-size: 1.2em;
   width: 100%;
   text-align: center;
-`
+`;

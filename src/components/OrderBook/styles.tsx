@@ -12,7 +12,7 @@ export const Container = styled.div`
     flex-direction: row;
     justify-content: center;
   }
-`
+`;
 
 export const TableContainer = styled.div`
   display: flex;
@@ -23,4 +23,4 @@ export const TableContainer = styled.div`
   @media only screen and (min-width: 800px) {
     width: 50%;
   }
-`
+`;

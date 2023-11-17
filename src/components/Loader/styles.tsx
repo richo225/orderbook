@@ -5,9 +5,9 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 79vh;
-  
+
   svg {
     width: 4em;
     height: 4em;
   }
-`
+`;

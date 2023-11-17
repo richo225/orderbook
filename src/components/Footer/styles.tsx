@@ -8,4 +8,4 @@ export const Container = styled.div`
   align-items: center;
   background-color: #121723;
   padding: 0.5em;
-`
+`;
