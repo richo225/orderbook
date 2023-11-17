@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Container } from "./styles";
+import { DEFAULT_ORDER_DATA } from "../../constants";
+
 
 interface OrderMessageProps {
   createdData: object;
@@ -18,7 +20,9 @@ const OrderMessage: FunctionComponent<OrderMessageProps> = ({
         <ErrorBlock errorData={errorData} />
       ) : !isEmpty(createdData) ? (
         <CreatedBlock createdData={createdData} />
-      ) : null}
+      ) : 
+        <Defaultblock />
+      }
     </Container>
   );
 };
@@ -29,7 +33,7 @@ const CreatedBlock = ({ createdData }: any) => {
       Order created successfully:
       <br />
       <br />
-      <pre>{JSON.stringify(createdData, null, 2)}</pre>
+      <pre>{JSON.stringify(createdData, null, 4)}</pre>
     </div>
   );
 };
@@ -40,9 +44,20 @@ const ErrorBlock = ({ errorData }: any) => {
       Error creating order:
       <br />
       <br />
-      <pre>{JSON.stringify(errorData, null, 2)}</pre>
+      <pre>{JSON.stringify(errorData, null, 4)}</pre>
     </div>
   );
 };
+
+const Defaultblock = () => {
+  return (
+    <div>
+      Select a market and place an order.
+      <br />
+      <br />
+      <pre>{JSON.stringify(DEFAULT_ORDER_DATA, null, 4)}</pre>
+    </div>
+  );
+}
 
 export default OrderMessage;
