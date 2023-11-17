@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent } from "react";
 
 import { Container } from "./styles";
 
@@ -8,7 +8,11 @@ interface ButtonProps {
   callback: () => void;
 }
 
-const Button: FunctionComponent<ButtonProps> = ({ title, backgroundColor = '#5741d9', callback}) => {
+const Button: FunctionComponent<ButtonProps> = ({
+  title,
+  backgroundColor = "#5741d9",
+  callback,
+}) => {
   return (
     <Container backgroundColor={backgroundColor} onClick={callback}>
       {title}

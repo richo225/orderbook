@@ -2,7 +2,6 @@ import React, { FunctionComponent } from "react";
 import { Container } from "./styles";
 import { DEFAULT_ORDER_DATA } from "../../constants";
 
-
 interface OrderMessageProps {
   createdData: object;
   errorData: object;
@@ -20,9 +19,9 @@ const OrderMessage: FunctionComponent<OrderMessageProps> = ({
         <ErrorBlock errorData={errorData} />
       ) : !isEmpty(createdData) ? (
         <CreatedBlock createdData={createdData} />
-      ) : 
+      ) : (
         <Defaultblock />
-      }
+      )}
     </Container>
   );
 };
@@ -58,6 +57,6 @@ const Defaultblock = () => {
       <pre>{JSON.stringify(DEFAULT_ORDER_DATA, null, 4)}</pre>
     </div>
   );
-}
+};
 
 export default OrderMessage;
