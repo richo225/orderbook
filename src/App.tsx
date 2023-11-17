@@ -11,9 +11,9 @@ import {
   clearOrdersState,
   selectMarket,
 } from "./components/OrderBook/orderbookSlice";
-import { useAppDispatch, useAppSelector } from "./hooks";
+import { useAppSelector } from "./hooks";
 import OrderMessage from "./components/OrderMessage";
-import { error } from "console";
+import axios from "axios";
 
 export const MarketPairs = {
   ETHUSD: "ETH/USD",
@@ -120,6 +120,7 @@ const GridContainer = styled.div`
 function App() {
   const [windowWidth, setWindowWidth] = useState(0);
   const [isFeedKilled, setIsFeedKilled] = useState(false);
+  const [isBookReset, setIsBookReset] = useState(false);
   const [fetchOrders, setFetchOrders] = useState(false);
   const [isPageVisible, setIsPageVisible] = useState(true);
   const [createdData, setCreatedData] = useState({});
@@ -184,9 +185,19 @@ function App() {
     }
   }, []);
 
-  const toggleFeed = (): void => {
-    setIsFeedKilled(!isFeedKilled);
+  const resetOrderBooks = (): void => {
+    axios.get("http://localhost:8080/orderbooks/reset").then((response) => {
+      setIsBookReset(true);
+      setFetchOrders(!fetchOrders);
+    }).catch((error) => {
+      setErrorData(error);
+    });
   };
+
+  const killFeed = () => {
+    setIsFeedKilled(!isFeedKilled);
+    setIsBookReset(false);
+  }
 
   const fetchOrdersCallback = (): void => {
     setFetchOrders(!fetchOrders);
@@ -226,11 +237,12 @@ function App() {
             </div>
             <div className="footer">
               <Footer
-                toggleFeedCallback={clearOrdersState}
-                killFeedCallback={toggleFeed}
+                resetOrderBooksCallback={resetOrderBooks}
+                killFeedCallback={killFeed}
                 isFeedKilled={isFeedKilled}
               />
               <StatusMessage
+                isBookReset={isBookReset}
                 isFeedKilled={isFeedKilled}
                 selectedMarket={market}
               />
