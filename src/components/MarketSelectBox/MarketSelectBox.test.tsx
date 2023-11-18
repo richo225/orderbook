@@ -22,7 +22,7 @@ test("renders a select box with certain market options", () => {
   );
   const selectElement = screen.getByTestId(/market/i);
   expect(selectElement).toBeInTheDocument();
-  let optionElement = screen.getByText(/Market ETH/i);
+  let optionElement = screen.getByText(/Market ETH\/USD/i);
   expect(optionElement).toBeInTheDocument();
 
   render(
@@ -30,6 +30,6 @@ test("renders a select box with certain market options", () => {
       <MarketSelectBox options={["BTC/USD", "BTC/GBP"]} />
     </Provider>
   );
-  optionElement = screen.getByText(/Market BTC/i);
+  optionElement = screen.getByText(/Market BTC\/GBP/i);
   expect(optionElement).toBeInTheDocument();
 });

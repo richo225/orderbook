@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FunctionComponent } from "react";
+import { ChangeEvent, FunctionComponent } from "react";
 
 import { Container } from "./Container";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -21,8 +21,8 @@ export const MarketSelectBox: FunctionComponent<MarketSelectBoxProps> = ({
   return (
     <Container>
       <select
-        data-testid="groupings"
-        name="groupings"
+        data-testid="market"
+        name="market"
         onChange={handleChange}
         defaultValue={market}
       >

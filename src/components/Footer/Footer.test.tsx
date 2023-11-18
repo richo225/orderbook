@@ -5,13 +5,13 @@ import Footer from "./index";
 test("renders two button when feed is active", () => {
   render(
     <Footer
-      toggleFeedCallback={jest.fn}
+      resetOrderBooksCallback={jest.fn}
       killFeedCallback={jest.fn}
       isFeedKilled={false}
     />
   );
-  const toggleFeedButton = screen.getByText(/Toggle feed/i);
-  expect(toggleFeedButton).toBeInTheDocument();
+  const resetBooksButton = screen.getByText(/Reset Books/i);
+  expect(resetBooksButton).toBeInTheDocument();
 
   const killFeedButton = screen.getByText(/Kill feed/i);
   expect(killFeedButton).toBeInTheDocument();
@@ -20,7 +20,7 @@ test("renders two button when feed is active", () => {
 test("renders `Renew feed` button when feed is not active", () => {
   render(
     <Footer
-      toggleFeedCallback={jest.fn}
+      resetOrderBooksCallback={jest.fn}
       killFeedCallback={jest.fn}
       isFeedKilled={true}
     />
