@@ -1,4 +1,4 @@
-name: React-TS
+name: build and test
 
 on:
   push:
