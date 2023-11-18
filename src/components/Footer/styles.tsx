@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { MOBILE_WIDTH } from "../../constants";
 
 export const Container = styled.div`
   display: flex;

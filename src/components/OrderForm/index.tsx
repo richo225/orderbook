@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState, useEffect } from "react";
 
 import { Container, Form } from "./styles";
 import axios from "axios";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../hooks";
 import { selectBestAsk, selectBestBid } from "../OrderBook/orderbookSlice";
 
 export enum OrderType {

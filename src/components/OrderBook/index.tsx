@@ -4,7 +4,7 @@ import TitleRow from "./TitleRow";
 import { Container, TableContainer } from "./styles";
 import PriceLevelRow from "./PriceLevelRow";
 import Spread from "../Spread";
-import { MOBILE_WIDTH, ORDERBOOK_LEVELS } from "../../constants";
+import { MOBILE_WIDTH } from "../../constants";
 import Loader from "../Loader";
 import DepthVisualizer from "../DepthVisualizer";
 import { PriceLevelRowContainer } from "./PriceLevelRow/styles";
@@ -67,12 +67,12 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
 
     var totalTotalVolume = 0;
     for (const ask of response.data.asks) {
-      var array = [];
-      array.push(ask.price);
-      array.push(ask.total_volume);
+      var askArray = [];
+      askArray.push(ask.price);
+      askArray.push(ask.total_volume);
       totalTotalVolume += ask.total_volume;
-      array.push(totalTotalVolume);
-      data.asks.push(array);
+      askArray.push(totalTotalVolume);
+      data.asks.push(askArray);
     }
 
     for (const ask of data.asks) {
@@ -82,12 +82,12 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
 
     totalTotalVolume = 0;
     for (const bid of response.data.bids) {
-      var array = [];
-      array.push(bid.price);
-      array.push(bid.total_volume);
+      var bidArray = [];
+      bidArray.push(bid.price);
+      bidArray.push(bid.total_volume);
       totalTotalVolume += bid.total_volume;
-      array.push(totalTotalVolume);
-      data.bids.push(array);
+      bidArray.push(totalTotalVolume);
+      data.bids.push(bidArray);
     }
 
     for (const bid of data.bids) {
