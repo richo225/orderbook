@@ -1,14 +1,13 @@
 import reducer, {
-  addAsks,
-  addBids,
-  addExistingState,
-  OrderbookState,
+  setBestAsk,
+  setBestBid,
+  setMarket,
 } from "./orderbookSlice";
 
 test("should return the initial state", () => {
   // @ts-ignore
   expect(reducer(undefined, {})).toEqual({
-    market: "PI_XBTUSD",
+    market: "ETH/USD",
     rawBids: [],
     bids: [],
     maxTotalBids: 0,
@@ -16,12 +15,14 @@ test("should return the initial state", () => {
     asks: [],
     maxTotalAsks: 0,
     groupingSize: 0.5,
+    bestBid: [],
+    bestAsk: [],
   });
 });
 
-test("should handle adding price levels", () => {
-  const previousState: OrderbookState = {
-    market: "PI_XBTUSD",
+test("should handle setting market", () => {
+  expect(reducer(undefined, setMarket("BTC/GBP"))).toEqual({
+    market: "BTC/GBP",
     rawBids: [],
     bids: [],
     maxTotalBids: 0,
@@ -29,87 +30,37 @@ test("should handle adding price levels", () => {
     asks: [],
     maxTotalAsks: 0,
     groupingSize: 0.5,
-  };
-
-  expect(
-    reducer(
-      previousState,
-      addExistingState({
-        product_id: "PI_XBTUSD",
-        asks: [
-          [1000, 1],
-          [1002, 1],
-        ],
-        bids: [
-          [1000, 1],
-          [1002, 1],
-        ],
-      })
-    )
-  ).toEqual({
-    market: "PI_XBTUSD",
-    rawBids: [
-      [1000, 1],
-      [1002, 1],
-    ],
-    bids: [
-      [1000, 1, 1, 50],
-      [1002, 1, 2, 100],
-    ],
-    maxTotalBids: 2,
-    rawAsks: [
-      [1000, 1],
-      [1002, 1],
-    ],
-    asks: [
-      [1000, 1, 1, 50],
-      [1002, 1, 2, 100],
-    ],
-    maxTotalAsks: 2,
-    groupingSize: 0.5,
+    bestBid: [],
+    bestAsk: [],
   });
+});
 
-  expect(
-    reducer(
-      previousState,
-      addBids([
-        [1000, 1],
-        [1002, 1],
-      ])
-    )
-  ).toEqual({
-    market: "PI_XBTUSD",
+test("should handle setting best bid", () => {
+  expect(reducer(undefined, setBestBid([1, 2]))).toEqual({
+    market: "ETH/USD",
     rawBids: [],
-    bids: [
-      [1000, 1, 1, 50],
-      [1002, 1, 2, 100],
-    ],
-    maxTotalBids: 2,
+    bids: [],
+    maxTotalBids: 0,
     rawAsks: [],
     asks: [],
     maxTotalAsks: 0,
     groupingSize: 0.5,
+    bestBid: [1, 2],
+    bestAsk: [],
   });
+});
 
-  expect(
-    reducer(
-      previousState,
-      addAsks([
-        [1000, 1],
-        [1002, 1],
-      ])
-    )
-  ).toEqual({
-    market: "PI_XBTUSD",
+test("should handle setting best ask", () => {
+  expect(reducer(undefined, setBestAsk([1, 2]))).toEqual({
+    market: "ETH/USD",
     rawBids: [],
-    asks: [
-      [1000, 1, 1, 50],
-      [1002, 1, 2, 100],
-    ],
+    bids: [],
     maxTotalBids: 0,
     rawAsks: [],
-    bids: [],
-    maxTotalAsks: 2,
+    asks: [],
+    maxTotalAsks: 0,
     groupingSize: 0.5,
+    bestBid: [],
+    bestAsk: [1, 2],
   });
 });
