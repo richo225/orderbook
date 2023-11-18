@@ -74,7 +74,7 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/orders", {
+      .post(`${process.env.REACT_APP_OCTGOPUS_API_URL}/orders`, {
         base: market.split("/")[0],
         quote: market.split("/")[1],
         price: price,

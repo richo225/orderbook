@@ -42,7 +42,7 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
     const quote = market.split("/")[1];
 
     axios
-      .get(`http://localhost:8080/orderbooks?base=${base}&quote=${quote}`)
+      .get(`${process.env.REACT_APP_OCTGOPUS_API_URL}/orderbooks?base=${base}&quote=${quote}`)
       .then((response) => {
         processData(response);
       })

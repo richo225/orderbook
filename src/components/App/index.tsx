@@ -84,7 +84,7 @@ function App() {
 
   const resetOrderBooks = (): void => {
     axios
-      .get("http://localhost:8080/orderbooks/reset")
+      .get(`${process.env.REACT_APP_OCTGOPUS_API_URL}/orderbooks/reset`)
       .then((response) => {
         setIsBookReset(true);
         setFetchOrders(!fetchOrders);
