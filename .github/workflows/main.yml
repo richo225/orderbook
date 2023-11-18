@@ -13,17 +13,17 @@ jobs:
 
     strategy:
       matrix:
-        node-version: ['14.x', '16.x']
-    
+        node-version: ["14.x", "16.x"]
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install dependencies
-      run: yarn
-    - name: Build app
-      run: CI=false yarn build
-    - name: Run tests
-      run: yarn test
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn
+      - name: Build app
+        run: CI=false yarn build
+      - name: Run tests
+        run: yarn test

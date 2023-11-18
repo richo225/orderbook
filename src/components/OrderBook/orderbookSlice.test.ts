@@ -1,8 +1,4 @@
-import reducer, {
-  setBestAsk,
-  setBestBid,
-  setMarket,
-} from "./orderbookSlice";
+import reducer, { setBestAsk, setBestBid, setMarket } from "./orderbookSlice";
 
 test("should return the initial state", () => {
   // @ts-ignore
