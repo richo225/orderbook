@@ -4,9 +4,9 @@ export const ORDERBOOK_LEVELS: number = 25; // rows count
 
 export const DEFAULT_ORDER_DATA: object = {
   name: "Octgopus",
-  description: "Golang matching engine",
+  description: "Order matching engine",
   author: "Richard Bates",
-  url: "github.com/richo225/octgopus",
+  tech: "Golang, React, Typescript",
 };
 
 export const MarketPairs = {

@@ -5,6 +5,7 @@ export const Container = styled.div`
   width: 100%;
   margin: 0 auto;
   justify-content: space-between;
+  align-items: center;
   color: #98a6af;
   padding: 0.6em;
   background-color: #121723;
