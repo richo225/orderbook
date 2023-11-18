@@ -1,17 +1,29 @@
-name: Tests
-on: [push]
+name: React-TS
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
 jobs:
   build:
-    name: Tests
+    name: Build and run tests
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ['14.x', '16.x']
+    
     steps:
-      - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: install # will run `yarn install` command
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build # will run `yarn build` command
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: test # will run `yarn test` command
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install dependencies
+      run: yarn
+    - name: Build app
+      run: CI=false yarn build
+    - name: Run tests
+      run: yarn test
