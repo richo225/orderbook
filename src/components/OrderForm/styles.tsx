@@ -41,13 +41,12 @@ export const Form = styled.div`
 
   button {
     padding: 0.3em 0.7em;
-    margin: 1em;
+    margin: 1em auto  ;
     border-radius: 4px;
     border: none;
     color: white;
     background: #118860;
-    font-family: "Calibri", sans-serif;
-    font-size: 1.2em;
+    font-size: 1.0em;
 
     &:hover {
       cursor: pointer;

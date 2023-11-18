@@ -40,7 +40,7 @@ export const GridContainer = styled.div`
     border-right: 1px solid #29303e;
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1270px) {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "orderform footer"

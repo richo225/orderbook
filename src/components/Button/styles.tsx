@@ -11,8 +11,7 @@ export const Container = styled.button<ContainerProps>`
   border: none;
   color: white;
   background: ${(props) => props.backgroundColor};
-  font-family: "Calibri", sans-serif;
-  font-size: 1.2em;
+  font-size: 1.1em;
 
   &:hover {
     cursor: pointer;
