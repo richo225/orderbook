@@ -14,5 +14,10 @@ export const Container = styled.div`
     text-align: left;
     padding: 1em;
     display: inline-block;
+
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-all;
   }
 `;

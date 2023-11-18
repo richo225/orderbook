@@ -1,7 +1,13 @@
 import styled from "styled-components";
 import { MOBILE_WIDTH } from "../../constants";
 
+export const Container = styled.div`
+  width: 100%;
+  max-width: 100%;
+`;
+
 export const GridContainer = styled.div`
+  max-width: 100%;
   display: grid;
   grid-template-columns: 1fr 1.5fr 1fr;
   grid-template-areas: "orderform ordermessage footer";
