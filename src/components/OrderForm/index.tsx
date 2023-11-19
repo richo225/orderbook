@@ -26,19 +26,19 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({
   const bestAsk: number[] = useAppSelector(selectBestAsk);
   const bestBid: number[] = useAppSelector(selectBestBid);
 
-  const [price, setPrice] = useState<number | undefined>(undefined);
-  const [size, setSize] = useState<number | undefined>(undefined);
+  const [price, setPrice] = useState<string | undefined>(undefined);
+  const [size, setSize] = useState<string | undefined>(undefined);
   const [orderType, setOrderType] = useState("limit");
   const [orderSide, setOrderSide] = useState("ask");
 
   useEffect(() => {
     if (price === undefined && size === undefined) {
       if (orderSide === "ask" && bestAsk.length > 0) {
-        setPrice(bestAsk[0]);
-        setSize(bestAsk[1]);
+        setPrice(bestAsk[0].toString());
+        setSize(bestAsk[1].toString());
       } else if (orderSide === "bid" && bestBid.length > 0) {
-        setPrice(bestBid[0]);
-        setSize(bestBid[1]);
+        setPrice(bestBid[0].toString());
+        setSize(bestBid[1].toString());
       }
     }
   }, [market, bestAsk, bestBid]);
@@ -57,11 +57,11 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({
     setOrderSide(e.target.value);
 
     if (e.target.value === "bid" && bestBid.length > 0) {
-      setPrice(bestBid[0]);
-      setSize(bestBid[1]);
+      setPrice(bestBid[0].toString());
+      setSize(bestBid[1].toString());
     } else if (e.target.value === "ask" && bestAsk.length > 0) {
-      setPrice(bestAsk[0]);
-      setSize(bestAsk[1]);
+      setPrice(bestAsk[0].toString());
+      setSize(bestAsk[1].toString());
     }
   };
 
@@ -77,8 +77,8 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({
       .post(`${process.env.REACT_APP_OCTGOPUS_API_URL}/orders`, {
         base: market.split("/")[0],
         quote: market.split("/")[1],
-        price: price,
-        size: size,
+        price: Number(price),
+        size: Number(size),
         type: orderType,
         side: orderSide,
       })
@@ -119,9 +119,10 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({
                 Price:
                 <input
                   type="number"
-                  step="0.001"
+                  step="any"
+                  min="0.000000000001"
                   value={price}
-                  onChange={(e) => setPrice(Number(e.target.value))}
+                  onChange={(e) => setPrice((e.target.value))}
                 />
               </label>
             </div>
@@ -131,9 +132,10 @@ const OrderForm: FunctionComponent<OrderFormProps> = ({
               Size:
               <input
                 type="number"
-                step="0.001"
+                step="any"
+                min="0.000000000001"
                 value={size}
-                onChange={(e) => setSize(Number(e.target.value))}
+                onChange={(e) => setSize((e.target.value))}
               />
             </label>
           </div>
