@@ -57,7 +57,7 @@ const OrderBook: FunctionComponent<OrderBookProps> = ({
     fetchOrderbook();
     const interval = setInterval(() => {
       fetchOrderbook();
-    }, 5000);
+    }, 10000);
     return () => clearInterval(interval);
   }, [market, isFeedKilled, fetchOrders]);
 
